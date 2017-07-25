@@ -11,7 +11,12 @@ public class testTest {
 			//String instrument = "TYAU17";
 			String filename = "TYAU17_14-06-2017.txt";
 			CreateRefinedTickFile a = new CreateRefinedTickFile(filename);
-			//System.out.println(LocalTime.now());
+			System.out.println(LocalTime.now());
+			MovementAnalysis b = new MovementAnalysis("TYAU17_14-06-2017_refined.txt",3);
+			System.out.println(LocalTime.now());
+			//String price = "126 21.0/32";
+			
+			//System.out.println(MovementAnalysis.addTicks(price, 22));
 			//CreateInstrumentSummary b = new CreateInstrumentSummary(instrument);
 			//System.out.println(LocalTime.now());
 		}catch (Exception e){

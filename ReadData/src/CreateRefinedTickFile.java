@@ -11,15 +11,11 @@ public class CreateRefinedTickFile {
 			File fw = new File(filename);
 			Scanner in = new Scanner(fw);
 			String[] line = in.nextLine().split(",");
-			//ArrayList<String> price = new ArrayList<String>();
-			price.add(line[1]);
-			//ArrayList<String> startTime = new ArrayList<String>();
-			startTime.add(line[0]);
-			//ArrayList<String> endTime = new ArrayList<String>();
-			endTime.add(line[0]);
-			//ArrayList<Integer> volume = new ArrayList<Integer>();
+
+			price.add(line[1]);			
+			startTime.add(line[0]);			
+			endTime.add(line[0]);			
 			volume.add(Math.abs(Integer.parseInt(line[2])));
-			//ArrayList<Integer> delta = new ArrayList<Integer>();
 			delta.add(Integer.parseInt(line[2]));
 			while (in.hasNextLine()){
 				line = in.nextLine().split(",");
