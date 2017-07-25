@@ -14,18 +14,24 @@ public class CreateFiles {
 			int count = 0;
 			String[] line = in.nextLine().split(",");
 			line = in.nextLine().split(",");
+			for (int i =0;i<line.length;i++){
+				line[i] = line[i].trim();
+			}
 			String dateFile = line[0];
 			ListOfDates.addDate(dateFile);				
 			File file1 = new File(instrument+"_"+changeDate(dateFile)+".txt");			
 			PrintWriter pw = new PrintWriter(file1);
 			pw.print(line[1]+","+toFractions(Double.parseDouble(line[5]))+",");
-			pw.print(Integer.parseInt(line[6])-Integer.parseInt(line[7]));
+			pw.print(Integer.parseInt(line[9])-Integer.parseInt(line[8]));
 			pw.println();
 			while (in.hasNextLine()){
 				line = in.nextLine().split(",");
+				for (int i =0;i<line.length;i++){
+					line[i] = line[i].trim();
+				}
 				if (line[0].equals(dateFile)) {
 					pw.print(line[1]+","+toFractions(Double.parseDouble(line[5]))+",");
-					pw.print(Integer.parseInt(line[6])-Integer.parseInt(line[7]));
+					pw.print(Integer.parseInt(line[9])-Integer.parseInt(line[8]));
 					pw.println();
 				}
 				else{
@@ -35,7 +41,8 @@ public class CreateFiles {
 					file1 = new File(instrument+"_"+changeDate(dateFile)+".txt");
 					pw = new PrintWriter(file1);
 					pw.print(line[1]+","+toFractions(Double.parseDouble(line[5]))+",");
-					pw.print(Integer.parseInt(line[6])-Integer.parseInt(line[7]));
+					// changed for sierra charts data
+					pw.print(Integer.parseInt(line[9])-Integer.parseInt(line[8]));
 					pw.println();
 				}
 			}
@@ -62,6 +69,7 @@ public class CreateFiles {
 	}
 	static void printList(String instrument){
 		try {
+			/* Creates a list of all filenames separated from the main file*/
 			File fw = new File(instrument+"_list.txt");
 			PrintWriter out;		
 			out = new PrintWriter(fw);

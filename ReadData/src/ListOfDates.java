@@ -29,6 +29,7 @@ public class ListOfDates {
 		return ListOfDates.get(index);
 	}
 	static void createList(String instrument){
+		/*Creates list of dates of all files seperated.*/
 		try{
 			File fw = new File(instrument+"_list.txt");
 			Scanner in = new Scanner(fw);
@@ -36,7 +37,6 @@ public class ListOfDates {
 			while (in.hasNextLine()){
 				date = in.nextLine();
 				date = date.substring(date.indexOf('_')+1,date.indexOf('.'));
-				//date = CreateFiles.changeDate(date);
 				addDate(date);
 			}
 			in.close();

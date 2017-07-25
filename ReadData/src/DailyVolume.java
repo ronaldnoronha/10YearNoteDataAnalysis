@@ -16,7 +16,7 @@ public class DailyVolume {
 				sum+=Math.abs(Integer.parseInt(line[2]));
 			}
 			in.close();
-			volumeByDate.put(file.substring(file.indexOf('_')+1,file.indexOf('.')),sum);
+			volumeByDate.put(file.replace('/', '-').substring(file.indexOf('_')+1,file.indexOf('.')),sum);
 		} catch (Exception e){
 			System.out.println(e.toString());
 		}
