@@ -3,40 +3,42 @@ import java.util.*;
 public class MovementAnalysis {
 	private ArrayList<Integer> upToleranceIndex = new ArrayList<Integer>();
 	private ArrayList<Integer> downToleranceIndex = new ArrayList<Integer>();
-	private ArrayList <String> price  = new ArrayList <String>();
+	private ArrayList<String> price  = new ArrayList<String>();
+	private ArrayList<Integer> upMax = new ArrayList<Integer>();
+	private ArrayList<Integer> downMax = new ArrayList<Integer>();
 	public MovementAnalysis(String filename, int tolerance){
 		try{
 			File fw = new File(filename);
 			Scanner in = new Scanner(fw);
-
 			String[] line;
 			while (in.hasNextLine()){
 				line = in.nextLine().split(",");
 				price.add(line[2]);
 			}			
 			in.close();
-			for (int i = 0; i<price.size();i++){
-				System.out.println("Position "+i);
-				upToleranceIndex.add(maxMovementIndex(new ArrayList<String>(price.subList(i, price.size())),tolerance,1));
-				if (i==0){
-					break;
-				}
-				System.out.println("Position "+i+" up "+upToleranceIndex.get(i));
+			for (int i = 0; i<price.size();i++){				
+				upToleranceIndex.add(maxMovementIndex(new ArrayList<String>(price.subList(i, price.size())),tolerance,1));								
+				upMax.add(numTicks(addTicks(price.get(upToleranceIndex.get(i)),tolerance),price.get(i)));
 				downToleranceIndex.add(maxMovementIndex(new ArrayList<String>(price.subList(i, price.size())),tolerance,-1));
-				
+				downMax.add(numTicks(price.get(i),addTicks(price.get(downToleranceIndex.get(i)),-tolerance)));				
 			}
 			String publishName = filename.substring(0,filename.indexOf("."))+"_movmement.txt";
-			publishMovementAnalysis(filename);
+			publishMovementAnalysis(publishName);
 		}catch (Exception e){
 			System.out.println(e.toString());
 		}
+	}
+	public int numTicks(String value1, String value2){
+		double difference;
+		difference = (toDouble(value1)-toDouble(value2))*64;
+		return (int)difference;
 	}
 	public void publishMovementAnalysis(String filename){
 		try{
 			File fw = new File(filename);
 			PrintWriter out = new PrintWriter(fw);
 			for (int i=0;i<price.size();i++){
-				out.println(price.get(i)+","+upToleranceIndex.get(i)+","+downToleranceIndex.get(i));
+				out.println(price.get(i)+","+upMax.get(i)+","+downMax.get(i));
 			}
 			out.close();
 		} catch (Exception e){
@@ -47,21 +49,19 @@ public class MovementAnalysis {
 		/*direction 1 for up and -1 for down*/
 		int slIndex, nextTickIndex;
 		if (direction==1){
-			slIndex = find(price,addTicks(price.get(0),-3),-1);
+			slIndex = find(price,addTicks(price.get(0),-tolerance),-1);
 			nextTickIndex = find(price,addTicks(price.get(0),1),1);
 		} else if (direction==-1){
-			slIndex = find(price,addTicks(price.get(0),3),1);
-			nextTickIndex = find(price,addTicks(price.get(0),1),-1);
+			slIndex = find(price,addTicks(price.get(0),tolerance),1);
+			nextTickIndex = find(price,addTicks(price.get(0),-1),-1);
 		} else{
 			return -100;
 		}
-		System.out.println("SL "+slIndex);
-		System.out.println("Next "+nextTickIndex);
-		System.out.println("trailing SL "+addTicks(price.get(0),-3));
-		System.out.println(price.size());
-		System.out.println(price.get(0));
+		
 		ArrayList<String> reducedPrice;
-		if (slIndex<nextTickIndex && slIndex!=-1) {
+		if (slIndex==-1 && nextTickIndex==-1){
+			return 0;
+		} else if ((slIndex<nextTickIndex && slIndex!=-1) || nextTickIndex==-1) {
 			return slIndex;
 		} else {
 			reducedPrice = new ArrayList<String>(price.subList(nextTickIndex, price.size()));
@@ -74,26 +74,23 @@ public class MovementAnalysis {
 		if (param==1){
 			for (int i=0;i<price.size();i++){
 				if(toDouble(price.get(i))>=toDouble(value)){
-					return i+1;
+					return i;
 				}
 			}
 		}else if (param ==0){
 			for (int i=0;i<price.size();i++){
 				if(toDouble(price.get(i))==toDouble(value)){
-					return i+1;
+					return i;
 				}
 			}
-
 		}else if (param ==-1){
 			for (int i=0;i<price.size();i++){
 				if(toDouble(price.get(i))<=toDouble(value)){
-					return i+1;
+					return i;
 				}
 			}
 		}
 		return -1;
-
-
 	}
 	public String addTicks(String price, int ticks){
 		String newPrice;
