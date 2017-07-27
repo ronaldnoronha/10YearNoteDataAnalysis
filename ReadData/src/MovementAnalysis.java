@@ -17,10 +17,12 @@ public class MovementAnalysis {
 			}			
 			in.close();
 			for (int i = 0; i<price.size();i++){				
-				upToleranceIndex.add(maxMovementIndex(new ArrayList<String>(price.subList(i, price.size())),tolerance,1));								
-				upMax.add(numTicks(addTicks(price.get(upToleranceIndex.get(i)),tolerance),price.get(i)));
+				upToleranceIndex.add(maxMovementIndex(new ArrayList<String>(price.subList(i, price.size())),tolerance,1));
+				if (numTicks(addTicks(price.get(upToleranceIndex.get(i)+i),tolerance),price.get(i))<0) upMax.add(0);
+				else upMax.add(numTicks(addTicks(price.get(upToleranceIndex.get(i)+i),tolerance),price.get(i)));
 				downToleranceIndex.add(maxMovementIndex(new ArrayList<String>(price.subList(i, price.size())),tolerance,-1));
-				downMax.add(numTicks(price.get(i),addTicks(price.get(downToleranceIndex.get(i)),-tolerance)));				
+				if (numTicks(price.get(i),addTicks(price.get(downToleranceIndex.get(i)+i),-tolerance))<0) downMax.add(0);
+				else downMax.add(numTicks(price.get(i),addTicks(price.get(downToleranceIndex.get(i)+i),-tolerance)));				
 			}
 			String publishName = filename.substring(0,filename.indexOf("."))+"_movmement.txt";
 			publishMovementAnalysis(publishName);
@@ -39,6 +41,7 @@ public class MovementAnalysis {
 			PrintWriter out = new PrintWriter(fw);
 			for (int i=0;i<price.size();i++){
 				out.println(price.get(i)+","+upMax.get(i)+","+downMax.get(i));
+				//out.println(price.get(i)+","+(upToleranceIndex.get(i))+","+(downToleranceIndex.get(i)));
 			}
 			out.close();
 		} catch (Exception e){
