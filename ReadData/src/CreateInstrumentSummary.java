@@ -14,10 +14,7 @@ public class CreateInstrumentSummary {
 				DailyVolume.addVolume(filename);
 				DailyRange.addRange(filename);
 				date = filename.substring(filename.indexOf('_')+1,filename.indexOf('.'));
-				out.println(date+","+DailyVolume.getVolume(date.replace('/','-'))+","+DailyRange.getRange(date.replace('/','-')));
-				//System.out.print(ListOfDates.getIndexDate(i)+"\t");
-				//System.out.print(DailyVolume.getVolume(ListOfDates.getIndexDate(i).replace('/','-'))+ "\t");			
-				//System.out.println(DailyRange.getRange(ListOfDates.getIndexDate(i).replace('/','-')));				
+				out.println(date+","+DailyVolume.getVolume(date.replace('/','-'))+","+DailyRange.getRange(date.replace('/','-')));								
 			}
 			out.close();
 			in.close();

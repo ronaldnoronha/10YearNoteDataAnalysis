@@ -1,11 +1,14 @@
 import java.io.*;
 import java.util.*;
 public class MovementAnalysis {
+	private ArrayList<String> startTime = new ArrayList<String>();
+	private ArrayList<String> endTime = new ArrayList<String>();
 	private ArrayList<Integer> upToleranceIndex = new ArrayList<Integer>();
 	private ArrayList<Integer> downToleranceIndex = new ArrayList<Integer>();
 	private ArrayList<String> price  = new ArrayList<String>();
 	private ArrayList<Integer> upMax = new ArrayList<Integer>();
 	private ArrayList<Integer> downMax = new ArrayList<Integer>();
+	private ArrayList<Integer> cumDelta = new ArrayList<Integer>();
 	public MovementAnalysis(String filename, int tolerance){
 		try{
 			File fw = new File(filename);
@@ -13,7 +16,10 @@ public class MovementAnalysis {
 			String[] line;
 			while (in.hasNextLine()){
 				line = in.nextLine().split(",");
+				startTime.add(line[0]);
+				endTime.add(line[1]);
 				price.add(line[2]);
+				cumDelta.add(Integer.parseInt(line[5]));
 			}			
 			in.close();
 			for (int i = 0; i<price.size();i++){				
@@ -40,7 +46,7 @@ public class MovementAnalysis {
 			File fw = new File(filename);
 			PrintWriter out = new PrintWriter(fw);
 			for (int i=0;i<price.size();i++){
-				out.println(price.get(i)+","+upMax.get(i)+","+downMax.get(i));
+				out.println(startTime.get(i)+","+endTime.get(i)+","+price.get(i)+","+upMax.get(i)+","+downMax.get(i)+","+cumDelta.get(i));
 				//out.println(price.get(i)+","+(upToleranceIndex.get(i))+","+(downToleranceIndex.get(i)));
 			}
 			out.close();

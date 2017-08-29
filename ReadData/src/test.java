@@ -14,5 +14,6 @@ public class test {
 		CreateInstrumentSummary b = new CreateInstrumentSummary(instrument); 
 		System.out.println(LocalTime.now());
 	}
+	public static void 
 }
 /* TO DO break data into smaller pockets and organise by date */

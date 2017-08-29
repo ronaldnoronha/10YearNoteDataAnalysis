@@ -6,6 +6,7 @@ public class CreateRefinedTickFile {
 	private ArrayList<String> endTime = new ArrayList<String>();
 	private ArrayList<Integer> volume = new ArrayList<Integer>();
 	private ArrayList<Integer> delta = new ArrayList<Integer>();
+	private ArrayList<Integer> cumDelta = new ArrayList<Integer>();
 	public CreateRefinedTickFile(String filename){
 		try{
 			File fw = new File(filename);
@@ -16,7 +17,7 @@ public class CreateRefinedTickFile {
 			startTime.add(line[0]);			
 			endTime.add(line[0]);			
 			volume.add(Math.abs(Integer.parseInt(line[2])));
-			delta.add(Integer.parseInt(line[2]));
+			delta.add(Integer.parseInt(line[2]));			
 			while (in.hasNextLine()){
 				line = in.nextLine().split(",");
 				if (price.get(price.size()-1).equals(line[1])){
@@ -32,6 +33,7 @@ public class CreateRefinedTickFile {
 				}
 			}
 			in.close();
+			createCumDelta();
 			publishRefinedTicks(filename);
 		} catch (Exception e){
 			System.out.println(e.toString());
@@ -43,11 +45,17 @@ public class CreateRefinedTickFile {
 			File fw = new File(refinedTickFile);
 			PrintWriter out = new PrintWriter(fw);
 			for (int i=0;i<price.size();i++){
-				out.println(startTime.get(i)+","+endTime.get(i)+","+price.get(i)+","+volume.get(i)+","+delta.get(i));
+				out.println(startTime.get(i)+","+endTime.get(i)+","+price.get(i)+","+volume.get(i)+","+delta.get(i)+","+cumDelta.get(i));
 			}
 			out.close();
 		} catch (Exception e){
 			System.out.println(e.toString());
+		}
+	}
+	public void createCumDelta(){
+		cumDelta.add(delta.get(0));
+		for (int i =1;i<delta.size();i++){
+			cumDelta.add(cumDelta.get(i-1)+delta.get(i));
 		}
 	}
 
