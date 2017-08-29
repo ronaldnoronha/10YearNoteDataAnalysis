@@ -3,7 +3,7 @@ import java.time.LocalTime;
 public class test {
 	public static void main(String[] args){
 		System.out.println(LocalTime.now());
-		String instrument = "TYAH17";
+		String instrument = "TYAM16";
 		CreateFiles.createFiles(instrument);
 		CreateFiles.printList(instrument);
 		int numOfDays = ListOfDates.getSize();
@@ -14,6 +14,5 @@ public class test {
 		CreateInstrumentSummary b = new CreateInstrumentSummary(instrument); 
 		System.out.println(LocalTime.now());
 	}
-	public static void 
 }
 /* TO DO break data into smaller pockets and organise by date */

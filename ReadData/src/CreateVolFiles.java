@@ -14,7 +14,7 @@ public class CreateVolFiles {
 			String[] max = new String[timestamp.size()];
 			String[] min = new String[timestamp.size()];
 			int[] volume = new int[timestamp.size()];
-			
+			int cumVolume = 0;
 			int index = getIndexTimeStamp(timestamp,line[0],interval);		
 			max[index] = line[1];
 			min[index] = line[1];
@@ -35,7 +35,9 @@ public class CreateVolFiles {
 				out.print(timestamp.get(i)+",");
 				out.print(max[i]+",");
 				out.print(min[i]+",");
-				out.println(volume[i]);
+				out.print(volume[i]+",");
+				cumVolume+=volume[i];
+				out.println(cumVolume);
 			}
 			out.close();
 		}catch(Exception e){
