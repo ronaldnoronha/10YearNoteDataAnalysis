@@ -9,10 +9,12 @@ public class testTest {
 			//System.out.println(LocalTime.now());
 			//DailyRange.addRange("TYAU17_14-06-2017.txt");
 			//String instrument = "TYAU17";
-			String filename = "TYAM17_2017-2-6.txt";
-			CreateRefinedTickFile a = new CreateRefinedTickFile(filename);
+			String filename = "TYAH16_2016-1-22.txt";
+			//CreateRefinedTickFile a = new CreateRefinedTickFile(filename);
 			System.out.println(LocalTime.now());
-			MovementAnalysis b = new MovementAnalysis("TYAM17_2017-2-6_refined.txt",3);
+			CreateVolFiles a;
+			a = new CreateVolFiles(filename,15);
+			//MovementAnalysis b = new MovementAnalysis("TYAM17_2017-2-6_refined.txt",3);
 			System.out.println(LocalTime.now());
 			String price1 = "126 21.0/32";
 			String price2 = "126 1.0/32";

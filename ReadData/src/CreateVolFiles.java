@@ -13,11 +13,13 @@ public class CreateVolFiles {
 			ArrayList<String> timestamp = createAllTimes(line[0],interval);
 			String[] max = new String[timestamp.size()];
 			String[] min = new String[timestamp.size()];
+			
 			int[] volume = new int[timestamp.size()];
 			int cumVolume = 0;
 			int index = getIndexTimeStamp(timestamp,line[0],interval);		
 			max[index] = line[1];
 			min[index] = line[1];
+			
 			volume[index] = Math.abs(Integer.parseInt(line[2]));
 			while (in.hasNextLine()){
 				line = in.nextLine().split(",");
@@ -31,13 +33,29 @@ public class CreateVolFiles {
 			in.close();
 			File fw1 = new File(file.substring(0,file.indexOf('.'))+"_"+interval+"m.txt");
 			PrintWriter out = new PrintWriter(fw1);
+			
+			String dayMax = max[0];
+			String dayMin = min[0];
+			
+			
 			for (int i=0;i<timestamp.size();i++){
 				out.print(timestamp.get(i)+",");
 				out.print(max[i]+",");
 				out.print(min[i]+",");
 				out.print(volume[i]+",");
 				cumVolume+=volume[i];
-				out.println(cumVolume);
+				out.print(cumVolume+",");
+				if (dayMax!=null && max[i]!=null){
+					if (toDouble(dayMax)<toDouble(max[i])) dayMax = max[i];
+				}
+				else if (dayMax == null && max[i]!=null) dayMax = max[i];
+				if (dayMin!=null && min[i]!=null){
+					if (toDouble(dayMin)>toDouble(min[i])) dayMin = min[i];
+				}
+				else if (dayMin == null && min[i]!=null) dayMin = min[i];
+				out.print(dayMax+",");
+				out.print(dayMin+",");
+				out.println((int)Math.round((toDouble(dayMax)-toDouble(dayMin))*64));
 			}
 			out.close();
 		}catch(Exception e){
