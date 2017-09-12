@@ -3,40 +3,95 @@ import java.util.*;
 public class testCreateContractLookupTable {
 
 	public static void main(String[] args) {
-		Date startDate = new Date();
-		Date endDate = new Date();
+		String start = "01-10-2016";
+		String end = "31-12-2016";
+		CreateContractLookupTable a = new CreateContractLookupTable(start,end);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		String start = "01-01-2016";
-		String end = "01-04-2016";
+		Date tryDate = new Date();
 		try{
-			startDate = dateFormat.parse(start);
-			endDate = dateFormat.parse(end);
-			List<Date> allDates = getDatesBetween(startDate,endDate);
-			for (int i =0;i<allDates.size();i++){
-				System.out.println(allDates.get(i).toString());
-			}
-		}catch (Exception e){
-			System.out.println(e.toString());
+			tryDate = dateFormat.parse(start);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
+		String[] contracts = new String[2];
+		contracts = possibleContracts(tryDate);
+		System.out.println(contracts[0]);
+		System.out.println(contracts[1]);
 	}
-	public static List<Date> getDatesBetween(
-			Date startDate, Date endDate) {
-		List<Date> datesInRange = new ArrayList<>();
+	public static String[] possibleContracts(Date a){
 		Calendar calendar = new GregorianCalendar();
-		calendar.setTime(startDate);
+		calendar.setTime(a);
+		int month = calendar.get(Calendar.MONTH);
+		int year = calendar.get(Calendar.YEAR)-2000;
+		String contract1 = "";
+		String contract2 = "";
 
-		Calendar endCalendar = new GregorianCalendar();
-		endCalendar.setTime(endDate);
-
-		while (calendar.before(endCalendar)) {
-			Date result = calendar.getTime();
-			// stipulate day is not saturday or sunday
-			if (calendar.get(Calendar.DAY_OF_WEEK)!=7 && calendar.get(Calendar.DAY_OF_WEEK)!=1){
-				datesInRange.add(result);
-			}
-			calendar.add(Calendar.DATE, 1);
+		if (month == 0) {
+			contract1 = "TYAH"+year;
+			contract2 = "TYAM"+year;
 		}
-		return datesInRange;
+		else if (month == 1) {
+			contract1 = "TYAH"+year;
+			contract2 = "TYAM"+year;
+		}
+		else if (month == 2) {
+			contract1 = "TYAH"+year;
+			contract2 = "TYAM"+year;
+		}
+		else if (month == 3) {
+			contract1 = "TYAM"+year;
+			contract2 = "TYAU"+year;
+		}
+		else if (month == 4) {
+			contract1 = "TYAM"+year;
+			contract2 = "TYAU"+year;
+		}
+		else if (month == 5) {
+			contract1 = "TYAM"+year;
+			contract2 = "TYAU"+year;
+		}
+		else if (month == 6) {
+			contract1 = "TYAU"+year;
+			contract2 = "TYAZ"+year;
+		}
+		else if (month == 7) {
+			contract1 = "TYAU"+year;
+			contract2 = "TYAZ"+year;
+		}
+		else if (month == 8) {
+			contract1 = "TYAU"+year;
+			contract2 = "TYAZ"+year;
+		}
+		else if (month == 9) {
+			contract1 = "TYAZ"+year;
+			contract2 = "TYAH"+(year+1);
+		}
+		else if (month == 10) {
+			contract1 = "TYAZ"+year;
+			contract2 = "TYAH"+(year+1);
+		}
+		else if (month == 11) {
+			contract1 = "TYAZ"+year;
+			contract2 = "TYAH"+(year+1);
+		}
+
+		String[] result = {contract1,contract2};
+		return result;
+	}
+	public static int[] frontRunningContract(String[] contracts){
+		int[] result = new int[3];
+		try{
+			File fw1 = new File(contracts[0]+"_summary.txt");
+			
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+
+		}
+
+
+
+		return result;
 	}
 
 }
