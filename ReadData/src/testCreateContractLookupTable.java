@@ -5,7 +5,7 @@ public class testCreateContractLookupTable {
 
 	public static void main(String[] args) {
 		String start = "01-01-2016";
-		String end = "31-03-2017";
+		String end = "28-09-2017";
 		CreateContractLookupTable a = new CreateContractLookupTable(start,end);
 //		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 //		

@@ -4,7 +4,7 @@ public class testMovementAnalysis {
 
 	public static void main(String[] args) {
 		System.out.println(LocalTime.now());
-		MovementAnalysis b = new MovementAnalysis("TYAM17_2017-5-18_refined.txt",4);
+		MovementAnalysis b = new MovementAnalysis("TYAZ17_2017-9-25_refined.txt",3);
 		System.out.println(LocalTime.now());
 
 	}
