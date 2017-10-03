@@ -1,13 +1,15 @@
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-
-public class testPercentileScore {
-
-	public static void main(String[] args) {
+public class PercentileScore {
+	private double score7AM;
+	private double score8AM;
+	private double score9AM;
+	public PercentileScore(String date, String instrument) {
 		try{
-			String date = "2017-10-3";
-			File fw = new File("TYAZ17_"+date+"_15m.txt");
+			File fw = new File(instrument +"_"+date+"_15m.txt");
 			Scanner in = new Scanner(fw);
 			int[][] data = new int[96][2];
 			String[] line;
@@ -19,9 +21,17 @@ public class testPercentileScore {
 				k++;
 			}
 			double[] score = rowScore(data);
-
+			
 			for (int i =0;i<score.length;i++){
-				System.out.println(String.format("%02d",(int)i/4)+":"+String.format("%02d",(i%4)*15)+":00.000"+"\t"+score[i]);
+				if((String.format("%02d",(int)i/4)+":"+String.format("%02d",(i%4)*15)+":00.000").equals("07:00:00.000")){
+					score7AM = score[i];
+				}
+				else if((String.format("%02d",(int)i/4)+":"+String.format("%02d",(i%4)*15)+":00.000").equals("08:00:00.000")){
+					score8AM = score[i];
+				}
+				else if((String.format("%02d",(int)i/4)+":"+String.format("%02d",(i%4)*15)+":00.000").equals("09:00:00.000")){
+					score9AM = score[i];
+				}
 			}
 
 			// Add time lookup for 15m files
@@ -29,7 +39,15 @@ public class testPercentileScore {
 			System.out.println(e.getMessage());
 		}
 	}
-
+	public double getScore7am(){
+		return score7AM;
+	}
+	public double getScore8am(){
+		return score8AM;
+	}
+	public double getScore9am(){
+		return score9AM;
+	}
 	public static double[] rowScore(int[][] data){
 		double[] result = new double[96];
 		try{
@@ -112,4 +130,5 @@ public class testPercentileScore {
 		result = instrument + "_" + date + "_" + interval + ".txt";
 		return result;	 
 	}
+
 }

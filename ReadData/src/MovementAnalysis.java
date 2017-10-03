@@ -30,7 +30,7 @@ public class MovementAnalysis {
 				if (numTicks(price.get(i),addTicks(price.get(downToleranceIndex.get(i)+i),-tolerance))<0) downMax.add(0);
 				else downMax.add(numTicks(price.get(i),addTicks(price.get(downToleranceIndex.get(i)+i),-tolerance)));				
 			}
-			String publishName = filename.substring(0,filename.indexOf("."))+"_movmement.txt";
+			String publishName = filename.substring(0,filename.indexOf("."))+"_movement.txt";
 			publishMovementAnalysis(publishName);
 		}catch (Exception e){
 			System.out.println(e.toString());
