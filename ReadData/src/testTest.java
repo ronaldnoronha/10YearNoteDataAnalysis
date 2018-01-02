@@ -13,12 +13,12 @@ public class testTest {
 			//CreateRefinedTickFile a = new CreateRefinedTickFile(filename);
 			System.out.println(LocalTime.now());
 			CreateVolFiles a;
-			a = new CreateVolFiles(filename,15);
+			//a = new CreateVolFiles(filename,15);
 			//MovementAnalysis b = new MovementAnalysis("TYAM17_2017-2-6_refined.txt",3);
 			System.out.println(LocalTime.now());
 			String price1 = "126 21.0/32";
 			String price2 = "126 1.0/32";
-			
+			System.out.println(filename.substring(0,filename.indexOf(".")));
 			//System.out.println(MovementAnalysis.numTicks(price1,price2));
 			//CreateInstrumentSummary b = new CreateInstrumentSummary(instrument);
 			//System.out.println(LocalTime.now());

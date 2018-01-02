@@ -6,7 +6,7 @@ public class testPercentileScore {
 
 	public static void main(String[] args) {
 		try{
-			String date = "2017-10-3";
+			String date = "2017-10-18";
 			File fw = new File("TYAZ17_"+date+"_15m.txt");
 			Scanner in = new Scanner(fw);
 			int[][] data = new int[96][2];
