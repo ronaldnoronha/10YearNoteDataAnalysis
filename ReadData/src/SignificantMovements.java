@@ -8,6 +8,8 @@ public class SignificantMovements {
 			File fw = new File("highVolDates.txt");
 			Scanner highVolDates = new Scanner(fw);
 			String[] line;
+			// supply ins
+			
 			HashMap<String, String> hmap = new HashMap<String, String>();
 			int counter = 0;
 			while (highVolDates.hasNextLine() && counter<2){
