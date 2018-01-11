@@ -20,15 +20,7 @@ public class SignificantTick {
 		volume = Integer.parseInt(vol);
 		delta = Integer.parseInt(del);
 	}
-	public void addEndTime(String endTime){
-		end = new Time(endTime);
+		
 	}
-	public void addVolume(String vol){
-		volume += Integer.parseInt(vol);
-	}
-	public void addDelta(String del){
-		delta += Integer.parseInt(del);
-	}
-	public 
 
 }

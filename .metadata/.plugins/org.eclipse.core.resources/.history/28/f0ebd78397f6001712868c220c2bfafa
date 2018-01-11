@@ -1,0 +1,13 @@
+
+
+public class SignificantTick {
+	private String instrument;
+	private String date;
+	private Time start;
+	private Time end;
+	private Price price;
+	private int maxUp;
+	private int maxDown;
+	
+
+}
