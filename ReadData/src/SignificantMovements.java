@@ -1,20 +1,25 @@
 import java.util.*;
 import java.io.*;
 public class SignificantMovements {
-	private ArrayList<HashMap<String,String>> significantMovements = new ArrayList<HashMap<String,String>>();
+	private ArrayList<RefinedTick> significantMovements = new ArrayList<RefinedTick>();
 	public SignificantMovements() {
 		// Read the high vol dates file
 		try {
 			File fw = new File("highVolDates.txt");
 			Scanner highVolDates = new Scanner(fw);
 			String[] line;
-			// supply ins
-			
-			HashMap<String, String> hmap = new HashMap<String, String>();
+			// supply filename to lookup
 			int counter = 0;
 			while (highVolDates.hasNextLine() && counter<2){
 				line = highVolDates.nextLine().split(",");
-				significantMovements = openRefinedMovementFile(line[0], line[1]);
+				significantMovements = getSignificantRefinedTicks(line[0], line[1]);
+				// call function to give all significant ticks from the file
+				// save to significant movements
+				//next
+			// results file
+			HashMap<String, String> hmap = new HashMap<String, String>();
+				
+				
 				counter++;
 			}
 			createResultsFile(significantMovements);
@@ -27,10 +32,12 @@ public class SignificantMovements {
 		//
 
 	}
-	public static ArrayList<HashMap<String,String>> openRefinedMovementFile(String date, String instrument){
+	public static RefinedTick getSignificantRefinedTicks(String date, String instrument){
 		try{
-			File fw = new File(instrument+"_"+date+"_refined_movement.txt");
-			Scanner in = new Scanner(fw);
+			File fw1 = new File(instrument+"_"+date+"_refined.txt");
+			Scanner in1 = new Scanner(fw1);
+			File fw2 = new File(instrument+"_"+date+"_refined_movement.txt");
+			Scanner in2 = new Scanner(fw2);
 			String[] line;
 			String start = "07:00:00.000";
 			String end = "10:00:00.000";
