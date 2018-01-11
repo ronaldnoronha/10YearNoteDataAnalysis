@@ -14,3 +14,19 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.
 
 !ENTRY org.eclipse.ui 2 2 2018-01-11 12:21:42.149
 !MESSAGE Invalid preference category path: org.eclipse.andmore.preferences.main (bundle: org.eclipse.andmore.ddms, page: org.eclipse.andmore.ddms.preferences.LogCatPreferencePage)
+!SESSION 2018-01-11 16:18:12.512 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_121
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_AU
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/ronaldnoronha/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/ronaldnoronha/.eclipse_keyring
+
+!ENTRY org.eclipse.core.net 1 0 2018-01-11 16:20:10.538
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.ui 2 2 2018-01-11 16:20:27.711
+!MESSAGE Invalid preference category path: org.eclipse.andmore.preferences.main (bundle: org.eclipse.andmore.ddms, page: org.eclipse.andmore.ddms.preferences.PreferencePage)
+
+!ENTRY org.eclipse.ui 2 2 2018-01-11 16:20:27.719
+!MESSAGE Invalid preference category path: org.eclipse.andmore.preferences.main (bundle: org.eclipse.andmore.ddms, page: org.eclipse.andmore.ddms.preferences.LogCatPreferencePage)
