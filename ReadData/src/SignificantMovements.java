@@ -32,46 +32,47 @@ public class SignificantMovements {
 		//
 
 	}
-	public static RefinedTick getSignificantRefinedTicks(String date, String instrument){
+	public static ArrayList<SignificantTick> getSignificantRefinedTicks(String date, String instrument){
 		try{
 			File fw1 = new File(instrument+"_"+date+"_refined.txt");
 			Scanner in1 = new Scanner(fw1);
 			File fw2 = new File(instrument+"_"+date+"_refined_movement.txt");
 			Scanner in2 = new Scanner(fw2);
-			String[] line;
+			String[] line1;
+			String[] line2;
 			String start = "07:00:00.000";
 			String end = "10:00:00.000";
 			HashMap<String, String> hmap;
 			Time a;
-			while (in.hasNextLine()){
-				line = in.nextLine().split(",");
-				a = new Time(line[1]);
-				if (a.checkTimeWithin(new Time(start),new Time(end)) && (Double.parseDouble(line[3])>8 || Double.parseDouble(line[4])>8)){
-					hmap = new HashMap<String, String>();
-					hmap.put("date",date);
-					hmap.put("instrument",instrument);
-					hmap.put("time",line[1]);
-					hmap.put("price",line[2]);
-					hmap.put("maxUp",line[3]);
-					hmap.put("maxDown",line[4]);
-					hmap.put("cum delta",line[5]);
-					significantMovements.add(hmap);
-					if (Double.parseDouble(hmap.get("maxUp"))>8){
-						while (in.hasNextLine()){
-							line = in.nextLine().split(",");
-							a = new Time(line[1]);
-							if (a.checkTimeWithin(new Time(start),new Time(end)) && )
-							
-						}
+			ArrayList<SignificantTick> listOfTicks = new ArrayList<SignificantTick>();
+			SignificantTick b;
+			while (in1.hasNextLine()){
+				line1 = in1.nextLine().split(",");
+				line2 = in2.nextLine().split(",");
+				
+				a = new Time(line2[1]);
+				if (a.checkTimeWithin(new Time(start),new Time(end)) && (Double.parseDouble(line2[3])>8 || Double.parseDouble(line2[4])>8)){
+					b = new SignificantTick(instrument,date,line2[1],line2[2],line2[3],line2[4],line1[4],line1[5]);
+					if (b.getMaxUp()>8) {
+						String endPrice = b.getEndMovement(b.getMaxUp());
 					}
-					// check if hmap.get("maxUp") or hmap.get("maxDown") is greater than 8
+					else {
+						String endPrice = b.getEndMovement(-b.getMaxDown());
+					}
+					// while price has not reached the endPrice
 					
+					while (!line2[1].equals(endPrice)){
+						line1 = in1.nextLine().split(",");
+						line2 = in2.nextLine().split(",");
+					}
+					b.addEndTime(line2[1]);
+					listOfTicks.add(b);				
 				}
 			}
 		} catch (Exception e){
 			System.out.println(e.getMessage());
 		}
-		return significantMovements;
+		return listOfTicks;
 	}
 	public static void createResultsFile(ArrayList<HashMap<String,String>> significantMovements){
 		try{

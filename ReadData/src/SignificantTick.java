@@ -29,6 +29,17 @@ public class SignificantTick {
 	public void addDelta(String del){
 		delta += Integer.parseInt(del);
 	}
-	public 
+	public String getEndMovement(int movement){
+		return price.addTicks(movement);
+	}
+	public int getMaxUp(){
+		return maxUp;
+	}
+	public int getMaxDown(){
+		return maxDown;
+	}
+	public String toString(){
+		return (instrument+ " "+ date+ " "+start.toString()+" "+end.toString()+" ");
+	}
 
 }
