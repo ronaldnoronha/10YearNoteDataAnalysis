@@ -6,7 +6,7 @@ public class testSignificantMovements {
 
 	public static void main(String[] args) {
 		System.out.println(LocalTime.now());
-		ArrayList<SignificantTick> a = getSignificantRefinedTicks("2017-12-14","TYAZ17");
+		ArrayList<SignificantTick> a = getSignificantRefinedTicks("2017-12-13","TYAZ17");
 		System.out.println(a.toString());
 		System.out.println(LocalTime.now());
 	}
@@ -15,8 +15,10 @@ public class testSignificantMovements {
 		try{
 			File fw1 = new File(instrument+"_"+date+"_refined.txt");
 			Scanner in1 = new Scanner(fw1);
+			
 			File fw2 = new File(instrument+"_"+date+"_refined_movement.txt");
 			Scanner in2 = new Scanner(fw2);
+			
 			String[] line1;
 			String[] line2;
 			String start = "07:00:00.000";
@@ -25,6 +27,7 @@ public class testSignificantMovements {
 			SignificantTick b;
 			String endPrice;
 			while (in1.hasNextLine()){
+				
 				line1 = in1.nextLine().split(",");
 				line2 = in2.nextLine().split(",");
 				
@@ -35,11 +38,11 @@ public class testSignificantMovements {
 						endPrice = b.getEndMovement(b.getMaxUp());
 					}
 					else {
-						endPrice = b.getEndMovement(-b.getMaxDown());
+						endPrice = b.getEndMovement(-1*b.getMaxDown());
 					}
 					// while price has not reached the endPrice
 					
-					while (!line2[1].equals(endPrice)){
+					while (!endPrice.equals(line1[2])){
 						line1 = in1.nextLine().split(",");
 						line2 = in2.nextLine().split(",");
 					}

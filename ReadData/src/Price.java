@@ -28,7 +28,7 @@ public class Price {
 		}
 		return null;
 	}
-	public String addTicks( int ticks){
+	public String addTicks(int ticks){
 		String newPrice;
 		newPrice = toFractions(toDouble(price)+(double)ticks/64);
 		return newPrice;

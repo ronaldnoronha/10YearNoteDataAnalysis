@@ -33,20 +33,23 @@ public class SignificantMovements {
 
 	}
 	public static ArrayList<SignificantTick> getSignificantRefinedTicks(String date, String instrument){
+		ArrayList<SignificantTick> listOfTicks = new ArrayList<SignificantTick>();
 		try{
 			File fw1 = new File(instrument+"_"+date+"_refined.txt");
 			Scanner in1 = new Scanner(fw1);
+			
 			File fw2 = new File(instrument+"_"+date+"_refined_movement.txt");
 			Scanner in2 = new Scanner(fw2);
+			
 			String[] line1;
 			String[] line2;
 			String start = "07:00:00.000";
 			String end = "10:00:00.000";
-			HashMap<String, String> hmap;
 			Time a;
-			ArrayList<SignificantTick> listOfTicks = new ArrayList<SignificantTick>();
 			SignificantTick b;
+			String endPrice;
 			while (in1.hasNextLine()){
+				
 				line1 = in1.nextLine().split(",");
 				line2 = in2.nextLine().split(",");
 				
@@ -54,14 +57,14 @@ public class SignificantMovements {
 				if (a.checkTimeWithin(new Time(start),new Time(end)) && (Double.parseDouble(line2[3])>8 || Double.parseDouble(line2[4])>8)){
 					b = new SignificantTick(instrument,date,line2[1],line2[2],line2[3],line2[4],line1[4],line1[5]);
 					if (b.getMaxUp()>8) {
-						String endPrice = b.getEndMovement(b.getMaxUp());
+						endPrice = b.getEndMovement(b.getMaxUp());
 					}
 					else {
-						String endPrice = b.getEndMovement(-b.getMaxDown());
+						endPrice = b.getEndMovement(-1*b.getMaxDown());
 					}
 					// while price has not reached the endPrice
 					
-					while (!line2[1].equals(endPrice)){
+					while (!endPrice.equals(line1[2])){
 						line1 = in1.nextLine().split(",");
 						line2 = in2.nextLine().split(",");
 					}
@@ -74,6 +77,7 @@ public class SignificantMovements {
 		}
 		return listOfTicks;
 	}
+	
 	public static void createResultsFile(ArrayList<HashMap<String,String>> significantMovements){
 		try{
 			File fw = new File("significantMovements.txt");
