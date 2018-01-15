@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 public class SignificantMovements {
-	private ArrayList<RefinedTick> significantMovements = new ArrayList<RefinedTick>();
+	private ArrayList<SignificantTick> significantMovements = new ArrayList<SignificantTick>();
 	public SignificantMovements() {
 		// Read the high vol dates file
 		try {
@@ -10,19 +10,17 @@ public class SignificantMovements {
 			String[] line;
 			// supply filename to lookup
 			int counter = 0;
-			while (highVolDates.hasNextLine() && counter<2){
+			while (highVolDates.hasNextLine()){
 				line = highVolDates.nextLine().split(",");
-				significantMovements = getSignificantRefinedTicks(line[0], line[1]);
+				significantMovements.addAll(getSignificantRefinedTicks(line[0], line[1]));
 				// call function to give all significant ticks from the file
 				// save to significant movements
 				//next
 			// results file
-			HashMap<String, String> hmap = new HashMap<String, String>();
-				
-				
 				counter++;
 			}
-			createResultsFile(significantMovements);
+			highVolDates.close();
+			createResultsFile();
 
 		} catch (Exception e){
 			System.out.println(e.getMessage());
@@ -55,7 +53,7 @@ public class SignificantMovements {
 				
 				a = new Time(line2[1]);
 				if (a.checkTimeWithin(new Time(start),new Time(end)) && (Double.parseDouble(line2[3])>8 || Double.parseDouble(line2[4])>8)){
-					b = new SignificantTick(instrument,date,line2[1],line2[2],line2[3],line2[4],line1[4],line1[5]);
+					b = new SignificantTick(instrument,date,line2[1],line2[2],line2[3],line2[4],line1[3],line1[4]);
 					if (b.getMaxUp()>8) {
 						endPrice = b.getEndMovement(b.getMaxUp());
 					}
@@ -67,6 +65,8 @@ public class SignificantMovements {
 					while (!endPrice.equals(line1[2])){
 						line1 = in1.nextLine().split(",");
 						line2 = in2.nextLine().split(",");
+						b.addDelta(line1[4]);
+						b.addVolume(line1[3]);
 					}
 					b.addEndTime(line2[1]);
 					listOfTicks.add(b);				
@@ -78,30 +78,24 @@ public class SignificantMovements {
 		return listOfTicks;
 	}
 	
-	public static void createResultsFile(ArrayList<HashMap<String,String>> significantMovements){
+	public void createResultsFile(){
 		try{
 			File fw = new File("significantMovements.txt");
 			PrintWriter out = new PrintWriter(fw);
 			for (int i = 0; i<significantMovements.size();i++){
-				out.print(significantMovements.get(i).get("date")+",");
-				out.print(significantMovements.get(i).get("instrument")+",");
-				out.print(significantMovements.get(i).get("time")+",");
-				out.print(significantMovements.get(i).get("price")+",");
-				out.print(significantMovements.get(i).get("maxUp")+",");
-				out.print(significantMovements.get(i).get("maxDown")+",");
-				out.println(significantMovements.get(i).get("cum delta"));
+				out.print(significantMovements.get(i).getInstrument()+",");
+				out.print(significantMovements.get(i).getDate()+",");
+				out.print(significantMovements.get(i).getStartTime()+",");
+				out.print(significantMovements.get(i).getEndTime()+",");
+				out.print(significantMovements.get(i).getPrice()+",");
+				out.print(significantMovements.get(i).getMaxUp()+",");
+				out.print(significantMovements.get(i).getMaxDown()+",");
+				out.print(significantMovements.get(i).getVolume()+",");
+				out.println(significantMovements.get(i).getDelta());
 			}
 			out.close();
 		} catch (Exception e){
 			System.out.println(e.getMessage());
 		}
-	}
-	public static void narrowSignificantMovements(ArrayList<HashMap<String,String>> significantMovements){
-		/*if the consecutive ticks starting from the first one has the large movement only pick the first one. 
-
-			If the price is still within the movement of the previous large movement, dont record. 
-
-		 * 
-		 */
 	}
 }

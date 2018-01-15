@@ -38,6 +38,28 @@ public class SignificantTick {
 	public int getMaxDown(){
 		return maxDown;
 	}
+	public String getInstrument(){
+		return instrument;
+	}
+	public String getDate(){
+		return date;
+	}
+	public Time getStartTime(){
+		return start;
+	}
+	public Time getEndTime(){
+		return end;
+	}
+	public Price getPrice(){
+		return price;
+	}
+	public int getVolume(){
+		return volume;
+	}
+	public int getDelta(){
+		return delta;
+	}
+	
 	public String toString(){
 		return (instrument+ " "+ date+ " "+start.toString()+" "+end.toString()+" ");
 	}
