@@ -15,7 +15,6 @@ public class Controller {
 			a = new CreateVolFiles(instrument+"_"+ListOfDates.getIndexDate(i).replace('/','-')+".txt",15);
 		}
 		CreateInstrumentSummary b = new CreateInstrumentSummary(instrument);
-		System.out.println(LocalTime.now());
 		// Create refined tick file
 		try{
 			File fw = new File(instrument+"_list.txt");
@@ -31,6 +30,7 @@ public class Controller {
 		}catch (Exception e){
 			System.out.println(e.toString());
 		}
+		System.out.println(LocalTime.now());
 	}
 
 }

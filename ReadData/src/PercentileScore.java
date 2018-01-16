@@ -87,25 +87,6 @@ public class PercentileScore {
 				result[i] = 100.0-score*100.0/listOfFiles.size();
 				score = 0;
 			}
-			File fw1 = new File("volumetest.txt");
-			PrintWriter out = new PrintWriter(fw1);
-			for (int i =0;i<volume.length;i++){
-				for (int j =0;j<volume[0].length;j++){
-					out.print(volume[i][j]+",");
-				}
-				out.println();
-			}
-			out.close();
-			fw1 = new File("rangetest.txt");
-			out = new PrintWriter(fw1);
-			for (int i =0;i<range.length;i++){
-				for (int j =0;j<range[0].length;j++){
-					out.print(range[i][j]+",");
-				}
-				out.println();
-			}
-			out.close();
-
 		} catch (Exception e){
 			System.out.println(e.getMessage());
 		}
