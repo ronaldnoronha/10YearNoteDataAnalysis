@@ -2,13 +2,13 @@ import java.io.*;
 import java.time.LocalTime;
 import java.util.*;
 
-
-public class testPercentileScore {
+public class testCreateDataForPercentile {
 
 	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 		System.out.println(LocalTime.now());
-		PercentileScore a = new PercentileScore("2017-12-11","TYAZ17");
-		System.out.println(a.getScore("07:00:00.000"));
+		CreateDataForPercentile a = new CreateDataForPercentile();
 		System.out.println(LocalTime.now());
-	}	
+	}
+	
 }
