@@ -32,5 +32,33 @@ public class RefinedTick {
 		System.out.println("Cum Delta:"+cumDelta);
 		return;
 	}
+	public String getStartTime(){
+		return startTime;
+	}
+	public String getEndTime(){
+		return endTime;
+	}
+	public String getPrice(){
+		return price;
+	}
+	public int getVolume(){
+		return vol;
+	}
+	public int getDelta(){
+		return delta;
+	}
+	public int getMaxUp(){
+		return maxUp;
+	}
+	public int getMaxDown(){
+		return maxDown;
+	}
+	public int getCumDelta(){
+		return cumDelta;
+	}
+		
+	
+	
+	
 
 }

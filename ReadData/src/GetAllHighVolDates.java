@@ -2,38 +2,50 @@ import java.io.*;
 import java.util.*;
 
 public class GetAllHighVolDates {
-
+	private ArrayList <String> highVolDates = new ArrayList <String>();
 	public GetAllHighVolDates() {
-		/* Get all high vol dates using the frontrunning contracts.
-		 */
+		// get score for each date
+		getList();
+		publish();
+		
+	}
+	public void getList(){
 		try {
 			File fw = new File("frontRunningContracts.txt");
-			File fw1 = new File("highVolDates.txt");
 			Scanner in = new Scanner(fw);
-			PrintWriter out = new PrintWriter(fw1);
 			String[] line;
 			String date;
 			String instrument;
-			PercentileScore a;
-			ArrayList <String> highVolDates = new ArrayList <String>();
 			while (in.hasNextLine()){
-				//System.out.println(in.nextLine());
 				line = in.nextLine().split(",");
 				date = line[0];
 				instrument = line[1];
-				a = new PercentileScore(date,instrument);
-				if (a.getScore7am()>=75) {
-					out.println(date+","+instrument+","+a.getScore7am());
-					highVolDates.add(date);
-				}
+				checkScore(date,instrument);				
 			}
 			in.close();
-			out.close();
-			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
+			
 	}
-
+	public void checkScore(String date, String instrument){
+		PercentileScore a = new PercentileScore(date,instrument);
+		if (a.getScore("07:00:00.000")>=75){
+			highVolDates.add(date+","+instrument+","+a.getScore("07:00:00.000"));
+		}
+	}
+	public void publish(){
+		try{
+			File fw1 = new File("highVolDates.txt");
+			PrintWriter out = new PrintWriter(fw1);
+			for (int i=0;i<highVolDates.size();i++){
+				out.println(highVolDates.get(i));
+			}
+			out.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+			
+		
+	}
 }

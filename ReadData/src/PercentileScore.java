@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PercentileScore {
-	int[][] data = new int[96][2];
+	private int[][] data = new int[96][2];
 	private double score7AM;
-	double[] score = new double[96];
+	private double[] score = new double[96];
 	public PercentileScore(String date, String instrument) {
 		// read file
 		readFile(instrument, date);
@@ -27,7 +27,7 @@ public class PercentileScore {
 				line = in.nextLine().split(",");
 				k = getTimeIndex(line[0]);
 				data[k][0] = Integer.parseInt(line[4]);
-				data[k][1] = Integer.parseInt(line[7]);
+				data[k][1] = Integer.parseInt(line[7]);				
 			}
 		} catch (Exception e){
 			System.out.println(e.getMessage());
@@ -42,25 +42,18 @@ public class PercentileScore {
 			Scanner in2 = new Scanner(fw2);
 			String[] line1;
 			String[] line2;
-			int total = 0;
 			int timeIndex = 0;
 			while (in1.hasNextLine()){
 				line1 = in1.nextLine().split(",");
 				line2 = in2.nextLine().split(",");
-				System.out.println(line1.length);
-				score[timeIndex] = 0;
+				//System.out.println(line1.length);
+				score[timeIndex] = 0;			
 				for (int i = 0; i<line1.length; i++){
-					total++;
-					System.out.println(line1[i]+ " "+line2[i]);
-					System.out.println(timeIndex);
-					System.out.println(data[timeIndex][1]+" "+data[timeIndex][2]);
-					if (Integer.parseInt(line1[i])<=data[timeIndex][2] && Integer.parseInt(line2[i])<=data[timeIndex][1]){
-						score[timeIndex]+=1;
-						System.out.print(score+" ");
+					if (Integer.parseInt(line1[i])<=data[timeIndex][1] && Integer.parseInt(line2[i])<=data[timeIndex][0]){
+						score[timeIndex]+=1;					
 					}
-					System.out.println();
 				}
-				score[timeIndex] = score[timeIndex]/total;
+				score[timeIndex] = score[timeIndex]/line1.length*100;
 				timeIndex++;
 			}
 		} catch (Exception e){
