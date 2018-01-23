@@ -56,16 +56,6 @@ public class RefinedTick {
 	public int getCumDelta(){
 		return cumDelta;
 	}
-	public int getBuyOrders(){
-		if (delta>=0){
-			return (vol-delta)/2+delta;
-		} else {
-			return (vol+delta)/2-delta;
-		}
-	}
-	public int getSellOrders(){
-		return (vol-getBuyOrders());
-	}
 		
 	
 	
