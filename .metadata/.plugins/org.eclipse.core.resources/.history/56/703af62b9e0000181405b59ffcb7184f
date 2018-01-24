@@ -11,8 +11,8 @@ public class DOM {
 		b.put("price",a.getPrice());
 		b.put("buy", Integer.toString(a.getBuyOrders()));
 		b.put("sell", Integer.toString(a.getSellOrders()));
-		b.put("volume", Integer.toString(a.getVolume()));
-		b.put("delta", Integer.toString(a.getDelta()));
+		b.put("volume", a.getVolume());
+		b.put("delta", a.getDelta());
 		
 		threshold = icebergThreshold;
 		instrument = instr;

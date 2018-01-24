@@ -5,14 +5,13 @@ public class DOM {
 	private int threshold;
 	private String instrument;
 	private String date;
-	private Price[] bidAsk = new Price[2];
 	public DOM(RefinedTick a,int icebergThreshold, String instr, String dt){
 		HashMap<String,String> b = new HashMap<String,String>();
 		b.put("price",a.getPrice());
 		b.put("buy", Integer.toString(a.getBuyOrders()));
 		b.put("sell", Integer.toString(a.getSellOrders()));
-		b.put("volume", Integer.toString(a.getVolume()));
-		b.put("delta", Integer.toString(a.getDelta()));
+		b.put("volume", a.getVolume());
+		b.put("delta", a.getDelta());
 		
 		threshold = icebergThreshold;
 		instrument = instr;
@@ -20,9 +19,6 @@ public class DOM {
 		
 		// add refined tick to dom
 		dom.add(b);
-		
-		// price to bidAsk
-		bidAsk[0] = new Price(b.get("price"));
 	}
 
 }
