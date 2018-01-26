@@ -22,20 +22,7 @@ public class DOM {
 		dom.add(b);
 		
 		// price to bidAsk
-		if (a.getBuyOrders()>0){
-			bidAsk[0] = new Price(b.get("price"));
-		}
-		if (a.getSellOrders()>0){
-			bidAsk[1] = new Price(b.get("price"));
-		}
-		
-	}
-	private void addTick(RefinedTick a){
-		// check price in bidAsk
-		if (a.getPrice().equals(bidAsk[0].toString())){
-			
-		}
-		
+		bidAsk[0] = new Price(b.get("price"));
 	}
 
 }

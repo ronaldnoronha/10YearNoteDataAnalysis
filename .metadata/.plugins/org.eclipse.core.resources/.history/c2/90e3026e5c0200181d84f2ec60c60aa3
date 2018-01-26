@@ -31,10 +31,7 @@ public class DOM {
 		
 	}
 	private void addTick(RefinedTick a){
-		// check price in bidAsk
-		if (a.getPrice().equals(bidAsk[0].toString())){
-			
-		}
+		
 		
 	}
 
