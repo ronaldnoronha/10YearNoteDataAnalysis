@@ -3,38 +3,43 @@ import java.util.*;
 
 public class test {
 	public static void main(String[] args){
-		/*int[] A = {-1, -1, -1};
-		System.out.println(sum(A,0));
-		String a  = "a0ie";
-		//System.out.println(a.contains("[0-9]"));
-		ArrayList<Integer> stops = new ArrayList<Integer>();
-		//stops.add(0);
-		//stops.add(1);
-		System.out.println(stops.contains(0));*/
-		//[40, 40, 100, 80, 20], [3, 3, 2, 2, 3], 3, 5, 200
-		int[] A = {40, 40, 40, 100, 80, 20};
-		int[] B =  {3, 3, 1, 2, 2, 3};
-		int M = 3;
-		int X = 5;
-		int Y = 200;
-		int queueStart = 0;
-		int num = 0;
-		int passengers = 0;
-		while (queueStart<A.length){
-			passengers = passengersTaken(A,B,X,Y,queueStart);
-			num+=numStops(B,queueStart,passengers)+1;
-			queueStart+=passengers;
-			System.out.println(num);
-			System.out.println(queueStart);
-			System.out.println(passengers);
-			
-		}
-		System.out.println(num);
-		/*System.out.println(passengersTaken(A,B,X,Y,queueStart));
-		queueStart+=passengersTaken(A,B,X,Y,queueStart);
-		System.out.println(passengersTaken(A,B,X,Y,queueStart));*/
+		int month = 3;
+        String monthString;
+        switch (month) {
+            case 1:  monthString = "January";
+                     break;
+            case 2:  monthString = "February";
+                     break;
+            case 3:  monthString = "March";
+                     break;
+            case 4:  monthString = "April";
+                     break;
+            case 5:  monthString = "May";
+                     break;
+            case 6:  monthString = "June";
+                     break;
+            case 7:  monthString = "July";
+                     break;
+            case 8:  monthString = "August";
+                     break;
+            case 9:  monthString = "September";
+                     break;
+            case 10: monthString = "October";
+                     break;
+            case 11: monthString = "November";
+                     break;
+            case 12: monthString = "December";
+                     break;
+            default: monthString = "Invalid month";
+                     break;
+        }
+        System.out.println(monthString);
 
 	}
+
+	   
+
+	        
 
 	public static int passengersTaken(int[] A, int[] B, int X, int Y, int queueStart){
 		int totalPassengers=0;
