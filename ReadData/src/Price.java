@@ -4,8 +4,8 @@ public class Price {
 	public Price(String value){
 		price = value;
 	}
-	public double toDouble(String value){
-		String[] line = value.split(" ");
+	public double toDouble(){
+		String[] line = price.split(" ");
 		Double num = Double.parseDouble(line[0]);
 		Double fraction = 0.00;
 		if (line.length>1) {
@@ -30,8 +30,17 @@ public class Price {
 	}
 	public String addTicks(int ticks){
 		String newPrice;
-		newPrice = toFractions(toDouble(price)+(double)ticks/64);
+		newPrice = toFractions(toDouble()+(double)ticks/64);
 		return newPrice;
+	}
+	public int greaterThan(Price a){
+		if (toDouble()>a.toDouble()){
+			return 1;
+		} else if (toDouble()==a.toDouble()){
+			return 0;
+		} else {
+			return -1;
+		}
 	}
 	
 }

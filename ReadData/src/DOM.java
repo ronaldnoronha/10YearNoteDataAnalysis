@@ -30,7 +30,7 @@ public class DOM {
 		}
 
 	}
-	private void addTick(RefinedTick a){
+	public void addTick(RefinedTick a){
 		// find price in the dom
 		int index = findPrice(a.getPrice());
 		// check price in bidAsk
@@ -50,14 +50,14 @@ public class DOM {
 		dom.get(index).put("sell",Integer.toString(orders));
 		if (a.getBuyOrders()>0) {
 			dom.get(index).put("buy", Integer.toString(a.getBuyOrders()));
-			bidAsk[1] = new price(a.getPrice());
+			bidAsk[1] = new Price(a.getPrice());
 		}
 		break;
 		case 3: orders = Integer.parseInt(dom.get(index).get("buy"))+a.getBuyOrders();
 		dom.get(index).put("buy",Integer.toString(orders));
 		if (a.getSellOrders()>0){
 			dom.get(index).put("sell", Integer.toString(a.getSellOrders()));
-			bidAsk[0] = new price(a.getPrice());
+			bidAsk[0] = new Price(a.getPrice());
 		}
 		break; 
 		case 4: 
@@ -97,9 +97,8 @@ public class DOM {
 		sortDom(dom);
 
 	}
-	private void sortDom(ArrayList<HashMap<String,String>> list){
+	private ArrayList<HashMap<String,String>> sortDom(ArrayList<HashMap<String,String>> list){
 		// split
-		int size = list.size();
 		ArrayList<HashMap<String,String>> L = new ArrayList<HashMap<String,String>>();
 		ArrayList<HashMap<String,String>> R = new ArrayList<HashMap<String,String>>();
 		for (int i = 0;i<list.size()/2;i++){
@@ -112,16 +111,34 @@ public class DOM {
 		L = sortDom(L);
 		R = sortDom(R);
 		// Merge halves
-		int i = 0;
-		while (i<list.size()){
-			if (L.get(0).get("price"))
+		ArrayList<HashMap<String,String>> sortedList = new ArrayList<HashMap<String,String>>();
+		Price lPrice;
+		Price rPrice;
+		while (L.isEmpty() && R.isEmpty()){
+			lPrice = new Price(L.get(0).get("price"));
+			rPrice = new Price(R.get(0).get("price"));
+			if (lPrice.greaterThan(rPrice)!=1){
+				sortedList.add(L.get(0));
+				L.remove(0);
+			} else {
+				sortedList.add(R.get(0));
+				R.remove(0);
+			}
 		}
+		return sortedList;
 	}
 	private int findPrice(String price){
 		for (int i=0;i<dom.size();i++){
 			if (dom.get(i).get("price").equals(price)) return i;
 		}
 		return -1;
+	}
+	public void print(){
+		System.out.println("Price"+"\t"+"Sells"+"\t"+"Buys");
+		for (int i = 0; i<dom.size();i++){
+			System.out.println(dom.get(i).get("price")+"\t"+dom.get(i).get("sell")+"\t"+dom.get(i).get("buy"));
+		}
+		System.out.println("Bid-Ask:" + bidAsk[0].toString()+"\t"+bidAsk[1].toString()); 
 	}
 
 }

@@ -26,6 +26,8 @@ public class RefinedTick {
 		System.out.println("End Time:"+endTime);
 		System.out.println("Price:"+price);
 		System.out.println("Volume:"+vol);
+		System.out.println("Sells:"+getSellOrders());
+		System.out.println("Buys:"+getBuyOrders());
 		System.out.println("Delta:"+delta);
 		System.out.println("Max Up:"+maxUp);
 		System.out.println("Max Down:"+maxDown);
