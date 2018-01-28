@@ -48,47 +48,41 @@ public class DOM {
 		break;
 		case 2: orders = Integer.parseInt(dom.get(index).get("sell"))+a.getSellOrders();
 		dom.get(index).put("sell",Integer.toString(orders));
-		// check if there are buys, if yes adjust the ASK and also dom.
+		if (a.getBuyOrders()>0) {
+			dom.get(index).put("buy", Integer.toString(a.getBuyOrders()));
+			bidAsk[1] = new price(a.getPrice());
+		}
 		break;
 		case 3: orders = Integer.parseInt(dom.get(index).get("buy"))+a.getBuyOrders();
 		dom.get(index).put("buy",Integer.toString(orders));
-		// check if there are sells if yes adjust the BID and also dom.
+		if (a.getSellOrders()>0){
+			dom.get(index).put("sell", Integer.toString(a.getSellOrders()));
+			bidAsk[0] = new price(a.getPrice());
+		}
 		break; 
 		case 4: 
 			if (index==-1){
-				addNewPriceDom();
-				// adjust bidAsk
+				addNewPriceToDom(a);
+				adjustBidAsk(a);
 			} else{
-				// adjust dom AND
-				// adjust bidAsk
+				if (a.getBuyOrders()>0) {
+					dom.get(index).put("buy", Integer.toString(a.getBuyOrders()));
+				}
+				if (a.getSellOrders()>0){
+					dom.get(index).put("sell", Integer.toString(a.getSellOrders()));
+				}
+				adjustBidAsk(a);
 			}
 			break;
-
 		}
-
-
-
-
-		if (a.getPrice().equals(bidAsk[0].toString()) || a.getPrice().equals(bidAsk[1].toString())){
-			if (a.getPrice().equals(bidAsk[0].toString())){
-				int orders = Integer.parseInt(dom.get(index).get("sell"))+a.getSellOrders();
-				dom.get(index).put("sell",Integer.toString(orders));	
-			}
-			if (a.getPrice().equals(bidAsk[1].toString())){
-				int orders = Integer.parseInt(dom.get(index).get("buy"))+a.getBuyOrders();
-				dom.get(index).put("buy",Integer.toString(orders));	
-			}
-		} else {
-			if(index==-1){
-				// create new price
-				addNewPriceDom(RefinedTick a);
-				// adjust bidAsk
-			} else{
-				// adjust bidAsk
-			}
+	}
+	private void adjustBidAsk(RefinedTick a){
+		if (a.getBuyOrders()>0){
+			bidAsk[1] = new Price(a.getPrice());
 		}
-
-
+		if (a.getSellOrders()>0){
+			bidAsk[0] = new Price(a.getPrice());
+		}
 	}
 	private void addNewPriceToDom(RefinedTick a){
 		// add to dom
@@ -100,13 +94,28 @@ public class DOM {
 		b.put("delta", Integer.toString(a.getDelta()));
 		dom.add(b);
 		// sort dom
+		sortDom(dom);
 
 	}
-	private void sortDom(){
+	private void sortDom(ArrayList<HashMap<String,String>> list){
 		// split
-		
+		int size = list.size();
+		ArrayList<HashMap<String,String>> L = new ArrayList<HashMap<String,String>>();
+		ArrayList<HashMap<String,String>> R = new ArrayList<HashMap<String,String>>();
+		for (int i = 0;i<list.size()/2;i++){
+			L.add(list.get(i));
+		}
+		for (int i = list.size()/2+1;i<list.size();i++){
+			R.add(list.get(i));
+		}
 		// sort halves
-		
+		L = sortDom(L);
+		R = sortDom(R);
+		// Merge halves
+		int i = 0;
+		while (i<list.size()){
+			if (L.get(0).get("price"))
+		}
 	}
 	private int findPrice(String price){
 		for (int i=0;i<dom.size();i++){
