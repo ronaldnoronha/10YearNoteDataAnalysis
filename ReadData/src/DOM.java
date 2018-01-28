@@ -22,12 +22,7 @@ public class DOM {
 		dom.add(b);
 
 		// price to bidAsk
-		if (a.getBuyOrders()>0){
-			bidAsk[0] = new Price(b.get("price"));
-		}
-		if (a.getSellOrders()>0){
-			bidAsk[1] = new Price(b.get("price"));
-		}
+		adjustBidAsk(a);
 
 	}
 	public void addTick(RefinedTick a){
@@ -138,7 +133,7 @@ public class DOM {
 		for (int i = 0; i<dom.size();i++){
 			System.out.println(dom.get(i).get("price")+"\t"+dom.get(i).get("sell")+"\t"+dom.get(i).get("buy"));
 		}
-		System.out.println("Bid-Ask:" + bidAsk[0].toString()+"\t"+bidAsk[1].toString()); 
+		System.out.println("Bid-Ask: " + bidAsk[0].toString()+"\t"+bidAsk[1].toString()); 
 	}
 
 }
