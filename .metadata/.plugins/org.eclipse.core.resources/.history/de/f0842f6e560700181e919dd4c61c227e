@@ -62,7 +62,7 @@ public class RefinedTick {
 		if (delta>=0){
 			return (vol-delta)/2+delta;
 		} else {
-			return (vol+delta)/2;
+			return (vol+delta)/2-delta;
 		}
 	}
 	public int getSellOrders(){

@@ -29,6 +29,9 @@ public class DOM {
 	public void addTick(RefinedTick a){
 		// find price in the dom
 		int index = findPrice(a.getPrice());
+		System.out.println("index "+index);
+		System.out.println(bidAsk[0]==null);
+		System.out.println(bidAsk[1]==null);
 		// check price in bidAsk
 		int scenario;
 		if (bidAsk[0]!=null && bidAsk[1]!=null){
@@ -45,6 +48,7 @@ public class DOM {
 		}
 		
 		int orders;
+		System.out.println("Scenario "+scenario);
 		switch (scenario){
 		case 1: orders = Integer.parseInt(dom.get(index).get("sell"))+a.getSellOrders();
 		dom.get(index).put("sell",Integer.toString(orders));
@@ -107,7 +111,7 @@ public class DOM {
 		ArrayList<HashMap<String,String>> L = new ArrayList<HashMap<String,String>>();
 		ArrayList<HashMap<String,String>> R = new ArrayList<HashMap<String,String>>();
 		int size = list.size();
-		if (size<=1) return list;
+		if (size==1) return list;
 		for (int i = 0;i<(int)size/2;i++){
 			L.add(list.get(i));
 		}

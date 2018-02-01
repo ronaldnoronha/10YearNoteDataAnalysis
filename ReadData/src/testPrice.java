@@ -8,7 +8,7 @@ public class testPrice {
 		System.out.println(a.toString());
 		System.out.println(a.addTicks(61));
 		System.out.println(a.toString());
-		System.out.println(a.toDouble(a.toString()));
+		System.out.println(a.toDouble());
 	}
 
 }
