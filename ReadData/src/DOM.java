@@ -43,7 +43,7 @@ public class DOM {
 			if (a.getPrice().equals(bidAsk[1].toString())) scenario = 3;
 			else scenario = 4;
 		}
-		
+		System.out.println(scenario);
 		int orders;
 		switch (scenario){
 		case 1: orders = Integer.parseInt(dom.get(index).get("sell"))+a.getSellOrders();
@@ -100,23 +100,48 @@ public class DOM {
 		dom.add(b);
 		// sort dom
 		sortDom(dom);
-
+	}
+	private void sortDomInsertionSort(){
+		/*i ← 1
+		while i < length(A)
+		    j ← i
+		    while j > 0 and A[j-1] > A[j]
+		        swap A[j] and A[j-1]
+		        j ← j - 1
+		    end while
+		    i ← i + 1
+		end while*/
+		/*	
+		int i = 1;
+		int j;
+		while (i<dom.size()){
+			j=i;
+			while ((j>0) && dom.get(i) dom.get(i-1)){
+				// swap
+				j--;
+			}
+			i++;
+		}*/
 	}
 	private ArrayList<HashMap<String,String>> sortDom(ArrayList<HashMap<String,String>> list){
 		// split
+		System.out.println("sorting " +list.size());
 		ArrayList<HashMap<String,String>> L = new ArrayList<HashMap<String,String>>();
 		ArrayList<HashMap<String,String>> R = new ArrayList<HashMap<String,String>>();
 		int size = list.size();
 		if (size<=1) return list;
+		System.out.println((int)size/2);
 		for (int i = 0;i<(int)size/2;i++){
 			L.add(list.get(i));
 		}
-		for (int i = (int)size/2+1;i<size;i++){
+		for (int i = (int)size/2;i<size;i++){
 			R.add(list.get(i));
 		}
 		// sort halves
+		System.out.println(L.size()+" "+R.size());
 		L = sortDom(L);
 		R = sortDom(R);
+		
 		// Merge halves
 		ArrayList<HashMap<String,String>> sortedList = new ArrayList<HashMap<String,String>>();
 		Price lPrice;
