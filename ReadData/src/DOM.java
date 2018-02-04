@@ -101,8 +101,6 @@ public class DOM {
 		// sort dom
 		//sortDom(dom);
 		sortDomInsertionSort();
-		System.out.println("Sorted");
-		print();
 	}
 	public void sortDomInsertionSort(){
 		/*i ← 1
@@ -123,15 +121,15 @@ public class DOM {
 		HashMap<String,String> b = new HashMap<String,String>();
 		while (i<dom.size()){
 			j=i;
-			price1 = new Price(dom.get(i).get("price"));
-			price2 = new Price(dom.get(i-1).get("price"));
+			price1 = new Price(dom.get(j).get("price"));
+			price2 = new Price(dom.get(j-1).get("price"));
 			
-			while ((j>0) && price2.greaterThan(price1)==1){
+			while ((j>0) && price1.greaterThan(price2)==1){
 				// swap
-				a = dom.get(i);
-				b = dom.get(i-1);
-				dom.set(i, b);
-				dom.set(i-1, a);
+				a = dom.get(j);
+				b = dom.get(j-1);
+				dom.set(j, b);
+				dom.set(j-1, a);
 				j--;
 			}
 			i++;

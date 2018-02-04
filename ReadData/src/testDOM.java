@@ -23,12 +23,11 @@ public class testDOM {
 				line = in.nextLine().split(",");
 				line1 = in1.nextLine().split(",");
 				a = new RefinedTick(line[0],line[1],line[2],Integer.parseInt(line[3]),Integer.parseInt(line[4]),Integer.parseInt(line1[3]),Integer.parseInt(line1[4]),Integer.parseInt(line1[5]));
-				a.print();
+				//a.print();
 				dom.addTick(a);
-				
 				counter++;
+				//dom.print();
 			}
-			dom.sortDomInsertionSort();
 			dom.print();
 			//}
 
