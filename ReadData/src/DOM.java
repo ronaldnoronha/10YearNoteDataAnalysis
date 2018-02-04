@@ -23,7 +23,7 @@ public class DOM {
 
 		// price to bidAsk
 		adjustBidAsk(a);
-		
+
 
 	}
 	public void addTick(RefinedTick a){
@@ -99,9 +99,12 @@ public class DOM {
 		b.put("delta", Integer.toString(a.getDelta()));
 		dom.add(b);
 		// sort dom
-		sortDom(dom);
+		//sortDom(dom);
+		sortDomInsertionSort();
+		System.out.println("Sorted");
+		print();
 	}
-	private void sortDomInsertionSort(){
+	public void sortDomInsertionSort(){
 		/*i ← 1
 		while i < length(A)
 		    j ← i
@@ -111,17 +114,28 @@ public class DOM {
 		    end while
 		    i ← i + 1
 		end while*/
-		/*	
+			
 		int i = 1;
 		int j;
+		Price price1;
+		Price price2;
+		HashMap<String,String> a = new HashMap<String,String>();
+		HashMap<String,String> b = new HashMap<String,String>();
 		while (i<dom.size()){
 			j=i;
-			while ((j>0) && dom.get(i) dom.get(i-1)){
+			price1 = new Price(dom.get(i).get("price"));
+			price2 = new Price(dom.get(i-1).get("price"));
+			
+			while ((j>0) && price2.greaterThan(price1)==1){
 				// swap
+				a = dom.get(i);
+				b = dom.get(i-1);
+				dom.set(i, b);
+				dom.set(i-1, a);
 				j--;
 			}
 			i++;
-		}*/
+		}
 	}
 	private ArrayList<HashMap<String,String>> sortDom(ArrayList<HashMap<String,String>> list){
 		// split
@@ -130,7 +144,6 @@ public class DOM {
 		ArrayList<HashMap<String,String>> R = new ArrayList<HashMap<String,String>>();
 		int size = list.size();
 		if (size<=1) return list;
-		System.out.println((int)size/2);
 		for (int i = 0;i<(int)size/2;i++){
 			L.add(list.get(i));
 		}
@@ -139,22 +152,36 @@ public class DOM {
 		}
 		// sort halves
 		System.out.println(L.size()+" "+R.size());
-		L = sortDom(L);
-		R = sortDom(R);
-		
+		if (L.size()>1) L = sortDom(L);
+		System.out.println("L size: "+L.size());
+		if (R.size()>1) R = sortDom(R);
+
 		// Merge halves
 		ArrayList<HashMap<String,String>> sortedList = new ArrayList<HashMap<String,String>>();
 		Price lPrice;
 		Price rPrice;
+		System.out.println("List :"+list.size());
+		System.out.println(L.size()+" "+R.size());
+		System.out.println(L.isEmpty()+" "+R.isEmpty());
 		while (L.isEmpty() && R.isEmpty()){
-			lPrice = new Price(L.get(0).get("price"));
-			rPrice = new Price(R.get(0).get("price"));
-			if (lPrice.greaterThan(rPrice)!=1){
-				sortedList.add(L.get(0));
-				L.remove(0);
+			if(L.isEmpty() || R.isEmpty()){
+				if (L.isEmpty()) {
+					sortedList.add(R.get(0));
+					R.remove(0);
+				} else {
+					sortedList.add(L.get(0));
+					L.remove(0);
+				}
 			} else {
-				sortedList.add(R.get(0));
-				R.remove(0);
+				lPrice = new Price(L.get(0).get("price"));
+				rPrice = new Price(R.get(0).get("price"));
+				if (lPrice.greaterThan(rPrice)!=1){
+					sortedList.add(L.get(0));
+					L.remove(0);
+				} else {
+					sortedList.add(R.get(0));
+					R.remove(0);
+				}
 			}
 		}
 		return sortedList;

@@ -28,6 +28,7 @@ public class testDOM {
 				
 				counter++;
 			}
+			dom.sortDomInsertionSort();
 			dom.print();
 			//}
 
