@@ -6,6 +6,7 @@ public class DOM {
 	private String instrument;
 	private String date;
 	private Price[] bidAsk = new Price[2];
+	// parameter for iceberg list. 
 	public DOM(RefinedTick a,int icebergThreshold, String instr, String dt){
 		HashMap<String,String> b = new HashMap<String,String>();
 		b.put("price",a.getPrice());
@@ -43,7 +44,7 @@ public class DOM {
 			if (a.getPrice().equals(bidAsk[1].toString())) scenario = 3;
 			else scenario = 4;
 		}
-		System.out.println(scenario);
+		//System.out.println(scenario);
 		int orders;
 		switch (scenario){
 		case 1: orders = Integer.parseInt(dom.get(index).get("sell"))+a.getSellOrders();
@@ -196,6 +197,9 @@ public class DOM {
 			System.out.println(dom.get(i).get("price")+"\t"+dom.get(i).get("sell")+"\t"+dom.get(i).get("buy"));
 		}
 		//System.out.println("Bid-Ask: " + bidAsk[0].toString()+"\t"+bidAsk[1].toString()); 
+	}
+	private void checkIceberg(){
+		
 	}
 
 }
