@@ -2,6 +2,7 @@ import java.util.*;
 
 public class DOM {
 	private ArrayList<HashMap<String,String>> dom = new ArrayList<HashMap<String,String>>();
+	private ArrayList<HashMap<String,String>> icebergList = new ArrayList<HashMap<String,String>>();
 	private int threshold;
 	private String instrument;
 	private String date;
@@ -24,7 +25,7 @@ public class DOM {
 
 		// price to bidAsk
 		adjustBidAsk(a);
-
+		checkIceberg(a);
 
 	}
 	public void addTick(RefinedTick a){
@@ -51,6 +52,7 @@ public class DOM {
 		dom.get(index).put("sell",Integer.toString(orders));
 		orders = Integer.parseInt(dom.get(index).get("buy"))+a.getBuyOrders();
 		dom.get(index).put("buy",Integer.toString(orders));
+		checkIceberg(a);
 		break;
 		case 2: orders = Integer.parseInt(dom.get(index).get("sell"))+a.getSellOrders();
 		dom.get(index).put("sell",Integer.toString(orders));
@@ -58,6 +60,7 @@ public class DOM {
 			dom.get(index).put("buy", Integer.toString(a.getBuyOrders()));
 			bidAsk[1] = new Price(a.getPrice());
 		}
+		checkIceberg(a);
 		break;
 		case 3: orders = Integer.parseInt(dom.get(index).get("buy"))+a.getBuyOrders();
 		dom.get(index).put("buy",Integer.toString(orders));
@@ -65,6 +68,7 @@ public class DOM {
 			dom.get(index).put("sell", Integer.toString(a.getSellOrders()));
 			bidAsk[0] = new Price(a.getPrice());
 		}
+		checkIceberg(a);
 		break; 
 		case 4: 
 			if (index==-1){
@@ -79,6 +83,7 @@ public class DOM {
 				}
 				adjustBidAsk(a);
 			}
+			checkIceberg(a);
 			break;
 		}
 	}
@@ -198,8 +203,33 @@ public class DOM {
 		}
 		//System.out.println("Bid-Ask: " + bidAsk[0].toString()+"\t"+bidAsk[1].toString()); 
 	}
-	private void checkIceberg(){
-		
+	private int[] getOrders(String Price){
+		int[] result = new int[2];
+		for (int i=0;i<dom.size();i++){
+			if (Price.equals(dom.get(i).get("price"))){
+				result[0] = Integer.parseInt(dom.get(i).get("sell"));
+				result[1] = Integer.parseInt(dom.get(i).get("buy"));
+				break;
+			}
+		}
+		return result;
 	}
-
+	private void checkIceberg(RefinedTick a){
+		int[] orders = getOrders(a.getPrice());
+		HashMap<String,String> iceberg = new HashMap<String,String>();
+		if (orders[0]>=threshold || orders[1]>=threshold){
+			iceberg.put("price",bidAsk[0].toString());
+			iceberg.put("sell",Integer.toString(orders[0]));
+			iceberg.put("buy",Integer.toString(orders[1]));
+			iceberg.put("time",a.getEndTime());
+			iceberg.put("maxUp",Integer.toString(a.getMaxUp()));
+			iceberg.put("maxDown",Integer.toString(a.getMaxDown()));
+			icebergList.add(iceberg);
+		}
+	}
+	public void publishIcebergList(){
+		for (int i=0;i<icebergList.size();i++){
+			System.out.println(icebergList.get(i).get("time")+"\t"+icebergList.get(i).get("price")+"\t"+icebergList.get(i).get("sell")+"\t"+icebergList.get(i).get("buy")+"\t"+icebergList.get(i).get("maxUp")+"\t"+icebergList.get(i).get("maxDown"));
+		}
+	}
 }
