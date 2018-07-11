@@ -42,5 +42,11 @@ public class Price {
 			return -1;
 		}
 	}
-	
+	public boolean equals(Price a) {
+		if(toDouble()==a.toDouble()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

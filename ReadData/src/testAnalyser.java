@@ -13,8 +13,6 @@ public class testAnalyser {
 		System.out.println(LocalTime.now());
 		SignificantMovements c = new SignificantMovements();
 		System.out.println(LocalTime.now());
-		
-
 	}
 
 }

@@ -30,7 +30,7 @@ public class GetAllHighVolDates {
 	}
 	public void checkScore(String date, String instrument){
 		PercentileScore a = new PercentileScore(date,instrument);
-		if (a.getScore("07:00:00.000")>=75){
+		if (a.getScore("07:00:00.000")>=80){
 			highVolDates.add(date+","+instrument+","+a.getScore("07:00:00.000"));
 		}
 	}

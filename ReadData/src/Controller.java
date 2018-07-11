@@ -6,7 +6,14 @@ public class Controller {
 
 	public static void main(String[] args) {
 		System.out.println(LocalTime.now());
-		String instrument = "TYAZ17";
+		String instrument = "TYAH18";
+		
+		// Builder method
+		/*
+		Builder builder = new Builder(instrument);
+		builder.readFile();
+		*/
+		
 		CreateFiles.createFiles(instrument);
 		CreateFiles.printList(instrument);
 		int numOfDays = ListOfDates.getSize();
@@ -30,6 +37,7 @@ public class Controller {
 		}catch (Exception e){
 			System.out.println(e.toString());
 		}
+		
 		System.out.println(LocalTime.now());
 	}
 
