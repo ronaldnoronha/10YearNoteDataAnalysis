@@ -5,7 +5,27 @@ public class testDOM {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		try{
+		String fileName = "test_refined_movement.txt";
+		DOMInterface a = new DOMInterface();
+		
+		try {
+			File f = new File(fileName);
+			Scanner in = new Scanner(f);
+			while (in.hasNextLine()) {
+				a.addTick(in.nextLine());
+				a.publishDom();
+				System.out.println();
+			}
+			
+			
+			in.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage().toString());
+		}
+		
+		
+		
+		/*try{
 			String date = "2016-2-26";
 			String instr = "TYAH16";
 			File fw  = new File(instr+"_"+date+"_refined.txt");
@@ -36,7 +56,7 @@ public class testDOM {
 
 		} catch (Exception e){
 			System.out.println(e.getMessage());
-		}
+		}*/
 
 	}
 

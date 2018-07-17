@@ -14,5 +14,4 @@ public class testAnalyser {
 		SignificantMovements c = new SignificantMovements();
 		System.out.println(LocalTime.now());
 	}
-
 }
